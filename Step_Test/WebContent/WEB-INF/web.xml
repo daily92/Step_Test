@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
+  <display-name>Step08_Auth</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <!-- DB 설정 -->
+  <!-- Step06 web.xml 에서 아래 내용 복붙 (xml 문서는 설정 정보를 문자열로 정의해 놓은 것)-->
+  	<resource-ref>
+		<description>Oracle Datasource example</description>
+		<res-ref-name>jdbc/myoracle</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+	
+	<!-- 필터 정의하기 -->
+		<!-- <white>흰둥이</white> 하면 에러남. 즉 형식이 주어져 있어 (아무거나 못 씀) 
+			쓸 수 있는 자식요소 뭐 있는 지 알아보려면 ctrl+space + fi -->
+	<filter>
+		<!-- 필터의 이름 정하기 (ctrl+space) -->
+		<filter-name>EncodingFilter</filter-name>
+		<!-- 필터가 어디에 있는지 명시하기 (ctrl+space) -->
+		<filter-class>test.filter.EncodingFilter</filter-class>
+		<!-- 초기화 파라미터 ctrl+space -->
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+	</filter>
+	
+		<!-- 이게 만약 json 형식 이었다면?
+			{"filter":
+				[
+					{"filter-name" : "EncodingFilter","filter-class" : "EncodingFilter"}
+				]
+			}
+			filter 의 자식요소로 필터 명, 필터 클래스 있음
+		 -->
+	
+	<!-- 필터가 동작하도록 맵핑하기 ctrl+space + fi  (@WebFilter 가 더 편하지만 이 방법도 알아놔야 해)-->
+	<filter-mapping>
+		<!-- 맵핑할 필터의 이름 (필터의 이름과 같아야 해) -->
+		<filter-name>EncodingFilter</filter-name>
+		<!-- 어떤 요청에 대해서 필터가 동작할 지 설정 ctrl+space -->
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+</web-app>
